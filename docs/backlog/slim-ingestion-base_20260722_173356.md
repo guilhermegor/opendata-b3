@@ -21,9 +21,9 @@ No `stpstone`, no headless browser, no PDF engine at import time.
       attributes (`str_source_key`, `cls_contract`, `dict_dtypes`), abstract `build_url()`,
       overridable `locate_table()` (identity by default, ZIP sources override).
 - [x] **Placement decision**: the base lives under `_internal/config/ports/`, *not* at
-      `src/filings_b3/_base_reader.py`. Rationale: the path itself must tell a consumer the
+      `src/opendata_b3/_base_reader.py`. Rationale: the path itself must tell a consumer the
       seam is private — `_internal` is the marker the whole family (`filings-anbima-*`,
-      `filings-rfb`, `pricefynance`) will share. Consequence, applied: the class dropped its
+      `opendata-rfb`, `pricefynance`) will share. Consequence, applied: the class dropped its
       `_` prefix (`_BaseB3Reader` → `Reader`) because `_internal` already carries the privacy
       signal, and `ports/` names the class after its file (`example_port.py` → `ExamplePort`).
 - [x] `run()` **returns** a typed DataFrame — no DB insertion (deliberate departure from the
@@ -42,11 +42,11 @@ No `stpstone`, no headless browser, no PDF engine at import time.
 - [ ] **Delete `_internal/config/ports/example_port.py`** and its `__init__` re-export. The
       config leaf doc says the reference port goes once a real port exists — `Reader` is that
       port. Also drop the `ExamplePort` paragraphs from
-      `src/filings_b3/_internal/config/CLAUDE.md`, replacing them with `Reader` as the worked
+      `src/opendata_b3/_internal/config/CLAUDE.md`, replacing them with `Reader` as the worked
       example.
-- [ ] **Decide and pin the public API surface.** `filings_b3.__all__` is still only
+- [ ] **Decide and pin the public API surface.** `opendata_b3.__all__` is still only
       `["__version__"]`. Concrete readers are the public product; `_internal` never is. Needs a
-      decision on the public module layout (flat `src/filings_b3/<dataset>.py` per CLAUDE.md,
+      decision on the public module layout (flat `src/opendata_b3/<dataset>.py` per CLAUDE.md,
       or one aggregate module) *before* the first migration issue lands, because every child
       issue of #2 copies whatever shape the first one sets.
 - [ ] Backport the boundary harness (below, now **done** here) into the BlueprintX
@@ -54,7 +54,7 @@ No `stpstone`, no headless browser, no PDF engine at import time.
 - [ ] **Proof-of-concept adapter**: one real B3 CSV/ZIP dataset end-to-end on `Reader`, with
       its own `FileContract` in `_internal/config/contracts/`. Pick the simplest child of #2
       (a direct-CSV source, no scraping). This is issue #3's acceptance criterion.
-- [ ] **Acceptance test**: `import filings_b3` pulls neither `playwright`/`selenium` nor
+- [ ] **Acceptance test**: `import opendata_b3` pulls neither `playwright`/`selenium` nor
       `fitz`/`pdfplumber` — assert on `sys.modules` after a clean import, not on prose.
 - [ ] **Poetry extras** `pdf` (`fitz` / `pdfplumber`) and `scraping` (`playwright` /
       `selenium`), lazily imported only where needed. *Deferrable*: no module needs them yet,
@@ -96,11 +96,11 @@ can never pass vacuously.
 `_internal` line added to a published doc / heavy-module list pointed at a module that *is*
 imported); all four went red, then green after restore. A gate that cannot fail is not a gate.
 
-### Correction from the filings-cvm recon
+### Correction from the opendata-cvm recon
 
 The originally proposed gate 1 was *"no exported name resolves into `_internal`"*. **That is
-wrong**, and `filings-cvm` proves it: its `__all__` exports `RetryPolicy`, imported from
-`filings_cvm._internal.utils.retry`. Promoting an internal type to public API via a deliberate
+wrong**, and `opendata-cvm` proves it: its `__all__` exports `RetryPolicy`, imported from
+`opendata_cvm._internal.utils.retry`. Promoting an internal type to public API via a deliberate
 re-export in `__init__.py` is a *feature* — it keeps one implementation while giving it a public
 name. The forbidden thing is the **consumer-facing import path**, which is what gate 3 guards.
 The snapshot's job is only to make each promotion deliberate.
@@ -110,15 +110,15 @@ The snapshot's job is only to make each promotion deliberate.
 Backport all four into BlueprintX `lib-minimal` as `tests/unit/test_api_boundary.py`,
 parameterised by `<project_name>`, plus a ruff `TID251` `banned-api` entry for
 `<pkg>._internal`. Template artifact, not per-project judgement — otherwise each new
-`filings-*` package is a fresh coin-flip.
+`opendata-*` package is a fresh coin-flip.
 
-## Recon: how filings-cvm (the mature sibling) is laid out
+## Recon: how opendata-cvm (the mature sibling) is laid out
 
-Read on 2026-07-22 to settle the public-layout question. `filings-cvm` has ~190 public readers
+Read on 2026-07-22 to settle the public-layout question. `opendata-cvm` has ~190 public readers
 across ~40 merged dataset issues, so its shape is evidence, not opinion.
 
 ```
-src/filings_cvm/
+src/opendata_cvm/
 	__init__.py          # flat re-export of ~190 names + explicit __all__ (incl. RetryPolicy)
 	ingestion/           # macro-section 1 (leitura)
 		_base_meta_reader.py         # section-local private base, NOT in _internal
@@ -130,15 +130,15 @@ src/filings_cvm/
 		utils/
 ```
 
-Findings that bear on filings-b3:
+Findings that bear on opendata-b3:
 
 - **Two-level public layout**: `<pkg>/<macro-section>/<taxonomy…>/<reader>.py`, then flat-
-  re-exported at the package root. A consumer writes `from filings_cvm import CdaReader`; the
+  re-exported at the package root. A consumer writes `from opendata_cvm import CdaReader`; the
   nesting organises the source, never the import.
 - **The port is THIN.** `IngestionReader` is ~20 lines: one abstract `read() -> DataFrame`,
   `metaclass=ABCTypeCheckerMeta`, no lifecycle. Each concrete reader composes `download_file`
   + `read_table` + `stamp_provenance` + `raw_workspace` itself.
-  ⚠️ **filings-b3's `Reader` diverges**: it is a ~230-line Template-Method base with the whole
+  ⚠️ **opendata-b3's `Reader` diverges**: it is a ~230-line Template-Method base with the whole
   fetch → locate → read → stamp lifecycle inside `ports/`. Decide deliberately before the first
   adapter lands — see the open question below.
 - **A section-local shared base lives in the public tree, `_`-prefixed**
@@ -147,13 +147,13 @@ Findings that bear on filings-b3:
   readers that share it.
 - **Constructor convention `path_raw: Path | None = None`** — documented in the cvm port as
   "the convention every reader in this library *and every sibling ingestion package* follows".
-  filings-b3's `Reader` has no `path_raw`; it uses a bare `TemporaryDirectory`. Adopting it
+  opendata-b3's `Reader` has no `path_raw`; it uses a bare `TemporaryDirectory`. Adopting it
   would let a contract failure be replayed against the exact bytes that broke it, instead of
   re-fetching an already-changed source. **Recommend adopting** — it is the family convention
   and this library will hit the same class of failure.
 - **Naming divergence**: cvm's port file/class is `ingestion_reader.py` / `IngestionReader`;
-  filings-b3's is `reader.py` / `Reader`. Only one should survive into the template.
-- **No API-boundary test exists in filings-cvm either** — the harness above is genuinely new
+  opendata-b3's is `reader.py` / `Reader`. Only one should survive into the template.
+- **No API-boundary test exists in opendata-cvm either** — the harness above is genuinely new
   work, and cvm is the first place it should be backported after the template.
 - Gate culture to respect: cvm puts gates needing git/network in `bin/check_*.py` + a unit test
   (`check_contract_drift`, `check_portal_completeness`, `check_backlog_ledger`). Our four gates
@@ -161,9 +161,9 @@ Findings that bear on filings-b3:
 
 ## Open question — the public layout (blocks epic #2)
 
-filings-b3 has **one** macro-section (ingestion only; there is nothing to submit to B3), so
+opendata-b3 has **one** macro-section (ingestion only; there is nothing to submit to B3), so
 cvm's `ingestion/` + `submission/` split does not transfer directly. The root `CLAUDE.md` rule
-"no redundant package-name subfolder" argues against `filings_b3/ingestion/`. That leaves the
+"no redundant package-name subfolder" argues against `opendata_b3/ingestion/`. That leaves the
 B3 dataset taxonomy (`trading_hours/`, `warranties/`, `theor_portf/`, …, visible in issues
 #64–#108) as the organising axis, flat-re-exported at the root exactly as cvm does.
 
@@ -178,5 +178,5 @@ the same seam) or collapse it into a section-local `_base_reader.py`.
   a type parameter with one inhabitant would be over-abstraction. Revisit only if a non-pandas
   return ever appears.
 - The class name `Reader` is deliberately *not* B3-specific: the sibling packages
-  (`filings-anbima-pub`, `filings-anbima-data`, `filings-rfb`, `pricefynance`) should carry the
+  (`filings-anbima-pub`, `filings-anbima-data`, `opendata-rfb`, `pricefynance`) should carry the
   same `_internal/config/ports/reader.py::Reader` seam, so the scaffold can ship it verbatim.

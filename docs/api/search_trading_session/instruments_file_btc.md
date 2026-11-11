@@ -40,7 +40,7 @@ As demais colunas preservam o texto exato da fonte.
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileBtcReader
+from opendata_b3.search_trading_session import InstrumentsFileBtcReader
 
 df = InstrumentsFileBtcReader(date(2026, 7, 29)).read()
 print(df.head())

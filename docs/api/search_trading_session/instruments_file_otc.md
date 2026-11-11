@@ -49,7 +49,7 @@ As demais colunas preservam o texto exato da fonte.
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileOtcReader
+from opendata_b3.search_trading_session import InstrumentsFileOtcReader
 
 df = InstrumentsFileOtcReader(date(2026, 7, 29)).read()
 print(df[["OTHR_ID", "ASST", "CTRCT_TP", "TRAD_ORGN_CD", "FNGB_IND"]].head())

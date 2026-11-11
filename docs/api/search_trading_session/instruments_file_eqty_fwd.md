@@ -42,7 +42,7 @@ Colunas monetárias carregam a sua **moeda** numa coluna companheira (`TRADG_CCY
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileEqtyFwdReader
+from opendata_b3.search_trading_session import InstrumentsFileEqtyFwdReader
 
 df = InstrumentsFileEqtyFwdReader(date(2026, 7, 29)).read()
 print(df.head())

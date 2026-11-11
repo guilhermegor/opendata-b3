@@ -55,7 +55,7 @@ As demais colunas preservam o texto exato da fonte.
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileFxdIncmNonTrdblReader
+from opendata_b3.search_trading_session import InstrumentsFileFxdIncmNonTrdblReader
 
 df = InstrumentsFileFxdIncmNonTrdblReader(date(2026, 7, 29)).read()
 print(df[["TCKR_SYMB", "CRPN_NM", "SRS_NB", "UNIT_VAL", "INTRST_RATE", "XPRTN_DT"]].head())

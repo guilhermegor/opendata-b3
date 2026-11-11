@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import pytest
 
-from filings_b3._internal.utils.text import pascal_to_upper_snake
+from opendata_b3._internal.utils.text import pascal_to_upper_snake
 
 
 @pytest.mark.parametrize(

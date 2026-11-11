@@ -71,7 +71,7 @@ def test_mapped_columns_are_the_consolidated_reader_paths_and_joins() -> None:
 	just as mapped as one resolved by a direct path — and B3's layout declares both the same way,
 	so omitting the joins would report them as drift against a layout that does list them.
 	"""
-	from filings_b3.search_trading_session import instruments_file as inst
+	from opendata_b3.search_trading_session import instruments_file as inst
 
 	frozenset_attr = frozenset(
 		str_col
@@ -94,7 +94,7 @@ def test_mapped_columns_exclude_attribute_derived_columns() -> None:
 	the flat layout can express. The rule keys off the ``/@`` in the path, so a future attribute
 	column is excluded automatically rather than by name.
 	"""
-	from filings_b3.search_trading_session import instruments_file as inst
+	from opendata_b3.search_trading_session import instruments_file as inst
 
 	assert "EXRC_PRIC_CCY" in inst._DICT_PATHS, "fixture drifted — the attribute column is gone"
 	assert not (drift.mapped_columns() & frozenset({"EXRC_PRIC_CCY", "MKT_CPTLSTN_CCY"}))
@@ -109,7 +109,7 @@ def test_mapped_columns_exclude_the_per_type_readers() -> None:
 	``InstrmInf`` sub-blocks — so a sub-block column appearing here would be reported as drift
 	against a layout that was never meant to declare it.
 	"""
-	from filings_b3.search_trading_session import instruments_file_adr as adr
+	from opendata_b3.search_trading_session import instruments_file_adr as adr
 
 	set_adr_only = frozenset(adr._DICT_PATHS) - frozenset({"TCKR_SYMB", "ISIN", "CFICD"})
 

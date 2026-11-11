@@ -26,7 +26,7 @@ contra um arquivo `IN` real. Os nomes seguem a convenção da biblioteca:
     Até a 0.2.1 este _reader_ publicava `UndrlygInstrmId/OthrId/Tp/Prtry` como **`TP`**, enquanto
     os outros quatro _readers_ que mapeiam o mesmo campo o publicavam como
     **`UNDRLYG_INSTRM_ID_TP`** — um campo com dois nomes no mesmo arquivo, o que quebrava um
-    `UNION ALL` sobre a família ([#165](https://github.com/guilhermegor/filings-b3/issues/165)).
+    `UNION ALL` sobre a família ([#165](https://github.com/guilhermegor/opendata-b3/issues/165)).
     **Migração:** renomeie `TP` para `UNDRLYG_INSTRM_ID_TP` no seu consumo. O caminho de origem e
     os valores não mudaram — só o nome da coluna.
 
@@ -50,7 +50,7 @@ Colunas monetárias carregam a sua **moeda** numa coluna companheira (`TRADG_CCY
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileFxdIncmReader
+from opendata_b3.search_trading_session import InstrumentsFileFxdIncmReader
 
 df = InstrumentsFileFxdIncmReader(date(2026, 7, 29)).read()
 print(df.head())

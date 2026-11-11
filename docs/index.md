@@ -1,4 +1,4 @@
-# **filings-b3** <img src="assets/b3-logo.png" align="right" width="200" style="border-radius: 15px;" alt="filings-b3">
+# **opendata-b3** <img src="assets/b3-logo.png" align="right" width="200" style="border-radius: 15px;" alt="opendata-b3">
 
 Biblioteca Python simples e eficiente para acessar os conjuntos de dados públicos da B3 (a bolsa
 brasileira). Cada _reader_ transforma um pregão em um `pandas.DataFrame` tipado, validado por
@@ -24,12 +24,12 @@ pip install opendata-b3
 
 ```python
 from datetime import date
-from filings_b3.daily_bulletin import BdiBtbLendingOpenPositionsReader
+from opendata_b3.daily_bulletin import BdiBtbLendingOpenPositionsReader
 
 df = BdiBtbLendingOpenPositionsReader(date(2025, 1, 2)).read()
 ```
 
 ---
 
-Parte da família `filings-*`. Gerado a partir do template **lib-minimal** via
+Parte da família `opendata-*`. Gerado a partir do template **lib-minimal** via
 [BlueprintX](https://github.com/guilhermegor/BlueprintX).

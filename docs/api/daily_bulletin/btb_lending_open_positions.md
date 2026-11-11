@@ -42,7 +42,7 @@ confirmados contra uma resposta **ao vivo** e o glossário oficial _Posição em
 
 ```python
 from datetime import date
-from filings_b3.daily_bulletin import BdiBtbLendingOpenPositionsReader
+from opendata_b3.daily_bulletin import BdiBtbLendingOpenPositionsReader
 
 df = BdiBtbLendingOpenPositionsReader(date(2025, 1, 2)).read()
 print(df[["TCKR_SYMB", "ISIN", "STOCK_BALANCE", "BALANCE"]].head())

@@ -13,13 +13,13 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from filings_b3._internal.utils.provenance import (
+from opendata_b3._internal.utils.provenance import (
 	hash_artifact,
 	hash_artifacts,
 	resolve_package_version,
 	stamp_provenance,
 )
-from filings_b3._internal.utils.tabular_reader import FileContract
+from opendata_b3._internal.utils.tabular_reader import FileContract
 
 
 # Contracts are normally constructed only in config/contracts (ruff TID251); tests are exempt.

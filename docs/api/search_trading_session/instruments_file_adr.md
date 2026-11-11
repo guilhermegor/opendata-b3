@@ -42,7 +42,7 @@ Colunas monetárias carregam a sua **moeda** numa coluna companheira (`PPSN_CCY`
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileAdrReader
+from opendata_b3.search_trading_session import InstrumentsFileAdrReader
 
 df = InstrumentsFileAdrReader(date(2026, 7, 29)).read()
 print(df.head())

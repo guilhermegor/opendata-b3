@@ -4,7 +4,7 @@ Branch: `docs/132-section-mirroring-docs`
 
 ## Decision
 
-Adopt the filings-cvm docs pattern: the docs tree mirrors the code's macro-sections. Chosen layout
+Adopt the opendata-cvm docs pattern: the docs tree mirrors the code's macro-sections. Chosen layout
 (user): **per-reader pages under `api/`** (honors b3's own `api/index.md` manifesto), one folder per
 section, each section with an overview `index.md` + one page per reader.
 

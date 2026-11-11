@@ -36,7 +36,7 @@ Live proof: reconciler run 30155847746 (green) after bot-auto-merges #126/#128 l
 
 ## Note
 
-filings-cvm does NOT have this bug (it uses a job-level `if` + `state`), so the bug is in the
-`lib-minimal`/`python-common` template that filings-b3 was generated from — cvm's reconciler was
+opendata-cvm does NOT have this bug (it uses a job-level `if` + `state`), so the bug is in the
+`lib-minimal`/`python-common` template that opendata-b3 was generated from — cvm's reconciler was
 rewritten past it. This is exactly why the lesson's "provoke the bot path to verify" methodology
 matters: triggering it live is what exposed the inert fix.

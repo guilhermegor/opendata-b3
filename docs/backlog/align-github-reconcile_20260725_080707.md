@@ -1,6 +1,6 @@
-# Align .github with filings-cvm; harden auto-merge branch cleanup — issue #127
+# Align .github with opendata-cvm; harden auto-merge branch cleanup — issue #127
 
-Issue: #127. Compared `filings-b3/.github/` against the sibling `filings-cvm/.github/` and closed
+Issue: #127. Compared `opendata-b3/.github/` against the sibling `opendata-cvm/.github/` and closed
 the one functional gap in the merged-PR reconciler (the mechanism that deletes an auto-merged PR's
 branch), plus filename parity.
 
@@ -30,7 +30,7 @@ branch), plus filename parity.
 ## Deliberately NOT ported (legitimate differences — the "why/where")
 
 - `contract-drift.yaml` and `portal-completeness.yaml` are **cvm-only**: weekly, non-blocking
-  detectors for the **CVM regulatory data portal** (cvm issues #98 / #111). filings-b3 reads B3
+  detectors for the **CVM regulatory data portal** (cvm issues #98 / #111). opendata-b3 reads B3
   exchange data and has no such portal. A B3 analogue (e.g. a live-glossary contract-drift check,
   relevant given the stpstone-vs-live column drift we hit) would be a **new feature**, not a
   folder-alignment — file it separately if wanted.

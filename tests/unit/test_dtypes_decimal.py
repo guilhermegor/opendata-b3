@@ -12,7 +12,7 @@ from decimal import Decimal
 import pandas as pd
 import pytest
 
-from filings_b3._internal.utils.dtypes import apply_dtypes
+from opendata_b3._internal.utils.dtypes import apply_dtypes
 
 
 def test_text_becomes_an_exact_decimal() -> None:

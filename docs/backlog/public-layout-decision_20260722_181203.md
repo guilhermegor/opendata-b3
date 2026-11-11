@@ -5,7 +5,7 @@ Settles the layout question left open in `slim-ingestion-base_20260722_173356.md
 
 Evidence base: the 105 `b3_*.py` modules in
 `stpstone/ingestion/countries/br/exchange/`, grouped by their **actual source URL** (not by
-name), plus the `filings-cvm` layout as the mature sibling.
+name), plus the `opendata-cvm` layout as the mature sibling.
 
 ## 1. Macro-sections — derived from B3's own site taxonomy
 
@@ -54,7 +54,7 @@ Detail per section:
 ### Layout
 
 ```
-src/filings_b3/
+src/opendata_b3/
 	__init__.py               # flat re-export of every public reader + explicit __all__
 	daily_bulletin/
 	search_trading_session/
@@ -66,12 +66,12 @@ src/filings_b3/
 
 Rationale for keeping the macro-section as the top level rather than `ingestion/<section>/`:
 this library has **one** macro-direction (there is nothing to submit to B3), and the root
-`CLAUDE.md` bans a redundant package-name subfolder. `filings_cvm` needs `ingestion/` +
+`CLAUDE.md` bans a redundant package-name subfolder. `opendata_cvm` needs `ingestion/` +
 `submission/` because it genuinely has both; copying that split here would add a folder with
 one child forever.
 
-Consumers still write `from filings_b3 import BdiStocksSummaryReader` — the nesting organises
-the source tree, never the import, exactly as `filings-cvm` does with its ~190 readers.
+Consumers still write `from opendata_b3 import BdiStocksSummaryReader` — the nesting organises
+the source tree, never the import, exactly as `opendata-cvm` does with its ~190 readers.
 
 ## 2. Divergence 1 — thin port vs fat Template-Method base
 
@@ -88,12 +88,12 @@ Asked for explicitly: pros and cons, not a verdict handed down.
   sources are heterogeneous (multi-member ZIPs, scraped HTML, JSON APIs, a legacy BMF portal).
   Hooks proliferate and the base accretes conditionals.
 - ❌ Readers vary in **construction**, not just in URL (`date_ref` vs none vs a regime
-  parameter). A rigid base fights that; `filings-cvm` hit exactly this at ~190 readers and
+  parameter). A rigid base fights that; `opendata-cvm` hit exactly this at ~190 readers and
   chose composition.
 - ❌ Cuts against "composition over inheritance" and "inheritance chains deeper than 2 levels"
   in the standing `common.md` rules.
 
-**Recommendation — the two-tier shape `filings-cvm` actually converged on**, which is neither
+**Recommendation — the two-tier shape `opendata-cvm` actually converged on**, which is neither
 extreme:
 
 1. Keep the **port thin**: one abstract `read() -> pd.DataFrame`. It is the family-wide
@@ -102,10 +102,10 @@ extreme:
    `daily_bulletin/_base_bdi_reader.py` for the 39 BDI files that truly do share one
    lifecycle, `search_trading_session/_base_pregao_reader.py` for the 42 `?filelist=` ones.
 
-That is precisely `filings-cvm`'s structure (`_internal/config/ports/ingestion_reader.py` as
+That is precisely `opendata-cvm`'s structure (`_internal/config/ports/ingestion_reader.py` as
 the contract + `ingestion/_base_meta_reader.py` as a section-local base beside the readers
 that share it). The fat base survives where it pays for itself, the port stays reusable across
-`filings-anbima-*` / `filings-rfb` / `pricefynance`, and the `clearing` scrapers are not forced
+`filings-anbima-*` / `opendata-rfb` / `pricefynance`, and the `clearing` scrapers are not forced
 through a lifecycle built for CSV downloads.
 
 Concretely: the current `Reader` body moves down into `daily_bulletin/_base_bdi_reader.py`
@@ -117,7 +117,7 @@ Confirmed as a hard architectural requirement, not a nicety: marketdata-fm needs
 of raw artifacts (bronze) and a **datawarehouse** of treated data (silver/gold), on S3-compatible
 object storage (open-source **rustfs** under consideration).
 
-`filings-cvm` already has the exact seam — `_internal/utils/raw_workspace.py`, a context
+`opendata-cvm` already has the exact seam — `_internal/utils/raw_workspace.py`, a context
 manager whose docstring already names the bronze layer, S3, and rustfs by name:
 
 - `path_raw=None` → a `TemporaryDirectory`, destroyed on exit (interactive consumer).
@@ -127,17 +127,17 @@ manager whose docstring already names the bronze layer, S3, and rustfs by name:
   directory to object storage is the caller's concern. If an `s3://` URL is ever passed
   directly, the upgrade lands in that one function and **no reader changes**.
 
-Action: port `raw_workspace.py` verbatim into filings-b3, and make
-`path_raw: Path | None = None` the constructor convention on every reader. filings-b3's
+Action: port `raw_workspace.py` verbatim into opendata-b3, and make
+`path_raw: Path | None = None` the constructor convention on every reader. opendata-b3's
 current `Reader` uses a bare `TemporaryDirectory`, so the raw bytes are unrecoverable today.
 
 → **BlueprintX lesson**: every ingestion package scaffolded from `lib-minimal` ships
 `raw_workspace` + the `path_raw` constructor convention. Non-negotiable: without it, a contract
 break is unreproducible, because re-fetching returns an already-changed source.
 
-## 4. Divergence 3 — naming: adopt the filings-cvm standard verbatim
+## 4. Divergence 3 — naming: adopt the opendata-cvm standard verbatim
 
-| Concern | filings-cvm (standard) | filings-b3 (current) | Action |
+| Concern | opendata-cvm (standard) | opendata-b3 (current) | Action |
 |---|---|---|---|
 | Port file | `_internal/config/ports/ingestion_reader.py` | `ports/reader.py` | rename |
 | Port class | `IngestionReader` | `Reader` | rename |
@@ -150,16 +150,16 @@ package.
 
 ## 5. RetryPolicy — port it, and backport to python-common
 
-filings-cvm's retry is an evolved **package**; filings-b3 still has the older single-module
+opendata-cvm's retry is an evolved **package**; opendata-b3 still has the older single-module
 decorator.
 
-| | filings-cvm | filings-b3 |
+| | opendata-cvm | opendata-b3 |
 |---|---|---|
 | Shape | `_internal/utils/retry/` package | `_internal/utils/retry.py` |
 | Modules | `policy.py`, `backoff.py`, `log_emitter.py`, `_schedule.py` | one file |
 | `RetryPolicy` | frozen dataclass, validated in `__post_init__`, `metaclass=TypeChecker` | **absent** |
 | Imperative form | `call_with_backoff` | **absent** (decorator only) |
-| Public promotion | exported in `filings_cvm.__all__` | n/a |
+| Public promotion | exported in `opendata_cvm.__all__` | n/a |
 
 `RetryPolicy` bundles five loose knobs (`int_max_attempts`, `float_base_wait_s`,
 `float_factor`, `str_strategy`, `float_max_wait_s`, `tuple_exceptions`) into one value object a
@@ -168,14 +168,14 @@ call. It deliberately excludes the per-attempt socket timeout, which stays with
 `download_file`. Per-reader tunability matters here: B3's portal throttles under load exactly
 as CVM's does.
 
-Agreed: wire it into filings-b3, and ship it in the BlueprintX **python-common** scaffold so
+Agreed: wire it into opendata-b3, and ship it in the BlueprintX **python-common** scaffold so
 every tier gets it, not just `lib-minimal`. Note it is a *promotion* case for the boundary
 harness — cvm exports `RetryPolicy` publicly while its implementation stays in `_internal`,
 which is the pattern gate 1 was corrected to allow.
 
 ## 6. Where the boundary harness gets documented
 
-filings-cvm publishes `docs/contributing.md` plus `docs/<section>/<dataset>.md` per dataset.
+opendata-cvm publishes `docs/contributing.md` plus `docs/<section>/<dataset>.md` per dataset.
 For the four gates:
 
 - **`docs/architecture.md`** (new published page, registered in `mkdocs.yml` `nav:`) — the
@@ -219,7 +219,7 @@ architecture, and a page consumers will not read is a page that rots.
 
 ## Implementation order
 
-1. [x] Port `_internal/utils/raw_workspace.py` from filings-cvm (+ 5 tests); `path_raw` adopted.
+1. [x] Port `_internal/utils/raw_workspace.py` from opendata-cvm (+ 5 tests); `path_raw` adopted.
 2. [x] Grow `_internal/utils/retry.py` into the `retry/` package with `RetryPolicy` +
    `call_with_backoff` (+ 18 ported tests — we previously had **zero** retry coverage). All three
    existing importers (`logs_emitter`, `http_downloader`, `ports`) were unaffected: they import
@@ -285,22 +285,22 @@ result set. Revisit when the drift job lands.
 
 The module exports **`cvm_meta_url()`** and documents CVM's `META/meta_<dataset>.txt`
 convention — which **B3 does not publish** — and it has **zero importers** here. It is a
-BlueprintX generalisation bug: the seam was lifted from filings-cvm into `python-common` with the
+BlueprintX generalisation bug: the seam was lifted from opendata-cvm into `python-common` with the
 origin regulator's naming baked into the API, so every sibling package (`filings-anbima-*`,
-`filings-rfb`, `pricefynance`) will inherit it too.
+`opendata-rfb`, `pricefynance`) will inherit it too.
 
 Captured as a lesson (global store + `docs/blueprintx-lessons.md`):
 `template-reference-impls-must-be-domain-neutral`, which also corrects
 `ingestion-import-sidecar-metadata-when-available` — that lesson's "Scaffold into" step is what
 introduced the branded name.
 
-**Recommend deleting the module from filings-b3** (unused, and wrong for this source), and
+**Recommend deleting the module from opendata-b3** (unused, and wrong for this source), and
 renaming it `example_meta_url` in the template. Left in place pending confirmation.
 
 ## Note — `path_raw` was already a captured lesson, not a new finding
 
-`ingestion-reader-persists-raw-artifact.md` (filings-cvm, 2026-07-08) already specifies the whole
+`ingestion-reader-persists-raw-artifact.md` (opendata-cvm, 2026-07-08) already specifies the whole
 convention, names marketdata-fm's medallion warehouse, and even names **rustfs**. The gap was not
-knowledge but **delivery**: the lesson was never backported into the template, so filings-b3
+knowledge but **delivery**: the lesson was never backported into the template, so opendata-b3
 scaffolded without it and its reader used a bare `TemporaryDirectory`. Worth treating as evidence
 that a lesson without a template change and a harness check does not actually propagate.

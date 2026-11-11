@@ -18,8 +18,8 @@ from datetime import date
 
 import pytest
 
-from filings_b3._internal.config.contracts import INSTRUMENTS_FILE
-from filings_b3.search_trading_session import (
+from opendata_b3._internal.config.contracts import INSTRUMENTS_FILE
+from opendata_b3.search_trading_session import (
 	InstrumentsFileAdrReader,
 	InstrumentsFileBtcReader,
 	InstrumentsFileCshReader,
@@ -39,7 +39,7 @@ from filings_b3.search_trading_session import (
 	InstrumentsFileReader,
 	InstrumentsFileStrtgyReader,
 )
-from filings_b3.search_trading_session._base_instruments_file_reader import (
+from opendata_b3.search_trading_session._base_instruments_file_reader import (
 	_COMMON_PATHS,
 	_BaseInstrumentsFileReader,
 )

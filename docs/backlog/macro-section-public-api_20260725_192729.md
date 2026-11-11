@@ -4,15 +4,15 @@ Branch: `feat/122-expose-macro-section-public-api`
 
 ## Policy decided
 
-Root **and** section are both public, stable import paths; only `filings_b3._internal` is private.
-The **section path is the preferred organised form** (`from filings_b3.daily_bulletin import
-BdiStocksSummaryReader`); the flat root re-export (`from filings_b3 import …`) stays as a
+Root **and** section are both public, stable import paths; only `opendata_b3._internal` is private.
+The **section path is the preferred organised form** (`from opendata_b3.daily_bulletin import
+BdiStocksSummaryReader`); the flat root re-export (`from opendata_b3 import …`) stays as a
 backward-compatible convenience. This reverses the prior docstring stance ("the nesting organises
 the source tree, never the import").
 
 ## Done
 
-- [x] Flipped the policy in three docstrings: `filings_b3/__init__.py`,
+- [x] Flipped the policy in three docstrings: `opendata_b3/__init__.py`,
       `daily_bulletin/__init__.py`, `search_trading_session/__init__.py`.
 - [x] Extended the boundary gate (`tests/unit/test_api_boundary.py`):
   - `_SECTION_SURFACE` frozen snapshot (one entry per public section; `search_trading_session`

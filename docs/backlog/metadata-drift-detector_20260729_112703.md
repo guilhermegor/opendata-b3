@@ -15,7 +15,7 @@ Branch: `feat/139-metadata-drift-detector` (also carries the #68 naming reconcil
 
 ## What shipped
 
-The filings-cvm META + contract-drift pattern, adapted to B3 (whose authoritative metadata is a
+The opendata-cvm META + contract-drift pattern, adapted to B3 (whose authoritative metadata is a
 downloadable **layout spreadsheet**, not a CKAN META endpoint).
 
 - **`InstrumentsLayoutMetaReader`** (`search_trading_session/instruments_layout_meta.py`) — public
@@ -26,7 +26,7 @@ downloadable **layout spreadsheet**, not a CKAN META endpoint).
   `CARDINALITY`, `DATA_TYPE`, `BVBG_PATH` + provenance (incl. `content_hash`). The datalake snapshot
   for marketdata-fm. Reuses the tabular seam (XLSX is tabular). Contract `INSTRUMENTS_LAYOUT_META`.
 - **`bin/check_contract_drift.py`** — REPLACED the dead scaffold stub (it imported `from config
-  import contracts` / a `contract_oracles.yaml` that never existed under the `filings_b3._internal`
+  import contracts` / a `contract_oracles.yaml` that never existed under the `opendata_b3._internal`
   layout, wired into nothing — see git `8b41881 first commit`). The new one is layout-aware:
   symmetric `layout_drift(mapped, layout)` oracle comparing the reader's mapped column set against
   B3's declared layout, opening/updating ONE tracking issue (label `contract-drift` + hidden

@@ -4,7 +4,7 @@ Branch: `refactor/163-remove-flat-root-exports`. Closes #163. **Quebra de compat
 
 ## Checklist
 
-- [x] `src/filings_b3/__init__.py` — `__all__ = ["__version__"]`, _imports_ dos _readers_ removidos
+- [x] `src/opendata_b3/__init__.py` — `__all__ = ["__version__"]`, _imports_ dos _readers_ removidos
 - [x] Docstrings das duas seções (`daily_bulletin`, `search_trading_session`)
 - [x] Exemplos de _docstring_ que ensinavam a forma plana (2 _readers_ do BDI)
 - [x] `test_api_boundary.py` — teste **invertido** + um novo, mais amplo
@@ -17,14 +17,14 @@ Branch: `refactor/163-remove-flat-root-exports`. Closes #163. **Quebra de compat
 
 ```python
 # única forma pública
-from filings_b3.daily_bulletin import BdiStocksSummaryReader
-from filings_b3.search_trading_session import InstrumentsFileReader
+from opendata_b3.daily_bulletin import BdiStocksSummaryReader
+from opendata_b3.search_trading_session import InstrumentsFileReader
 
 # agora levanta ImportError
-from filings_b3 import InstrumentsFileReader
+from opendata_b3 import InstrumentsFileReader
 ```
 
-`filings_b3.__all__ == ["__version__"]`, e `filings_b3.__version__` continua funcionando.
+`opendata_b3.__all__ == ["__version__"]`, e `opendata_b3.__version__` continua funcionando.
 
 ## Isto REVERTE uma decisão deliberada, não corrige um descuido
 
@@ -73,8 +73,8 @@ foi uma decisão consciente, que é justamente o contexto que este PR precisa pr
 
 ## Verificação de aceite (todos confirmados)
 
-- `from filings_b3 import InstrumentsFileReader` → `ImportError: cannot import name …`
-- `from filings_b3.search_trading_session import InstrumentsFileReader` → OK
-- `filings_b3.__all__ == ["__version__"]` → OK
-- `filings_b3.__version__` resolve → OK
+- `from opendata_b3 import InstrumentsFileReader` → `ImportError: cannot import name …`
+- `from opendata_b3.search_trading_session import InstrumentsFileReader` → OK
+- `opendata_b3.__all__ == ["__version__"]` → OK
+- `opendata_b3.__version__` resolve → OK
 - Suíte completa **298 passed**; `ruff`, `mypy src`, `mkdocs --strict` limpos

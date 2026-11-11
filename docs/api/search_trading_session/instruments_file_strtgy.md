@@ -63,7 +63,7 @@ As demais colunas preservam o texto exato da fonte.
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileStrtgyReader
+from opendata_b3.search_trading_session import InstrumentsFileStrtgyReader
 
 df = InstrumentsFileStrtgyReader(date(2026, 7, 29)).read()
 print(df[["TCKR_SYMB", "SD_TP_CD1", "UNDRLYG_TCKR_SYMB1", "SD_TP_CD2", "UNDRLYG_TCKR_SYMB2"]].head())

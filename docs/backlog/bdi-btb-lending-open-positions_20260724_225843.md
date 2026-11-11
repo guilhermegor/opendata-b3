@@ -28,7 +28,7 @@ the **reference layout** the remaining 36 daily-bulletin readers (#5–#42) copy
 
 ### Refactors made while this was the template (so #5+ inherit them)
 
-- [x] **Contracts mirror `src/filings_b3/`.** Restructured into section subpackages
+- [x] **Contracts mirror `src/opendata_b3/`.** Restructured into section subpackages
       (`contracts/daily_bulletin/…`); dropped the redundant `bdi_` filename prefix (moved the
       existing `stocks_summary` contract too). Widened the TID251 ruff glob to
       `contracts/**/*.py` so the subfolder keeps the `FileContract`-construction exemption.

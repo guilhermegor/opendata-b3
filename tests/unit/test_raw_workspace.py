@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from filings_b3._internal.utils.raw_workspace import raw_workspace
+from opendata_b3._internal.utils.raw_workspace import raw_workspace
 
 
 def test_default_workspace_is_removed_on_exit() -> None:

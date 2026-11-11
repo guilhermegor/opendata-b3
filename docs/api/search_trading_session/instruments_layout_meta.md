@@ -40,7 +40,7 @@ então não recebe `date_ref`.
 ### Baixar o snapshot de layout
 
 ```python
-from filings_b3.search_trading_session import InstrumentsLayoutMetaReader
+from opendata_b3.search_trading_session import InstrumentsLayoutMetaReader
 
 df = InstrumentsLayoutMetaReader().read()
 print(df[["COLUMN_ORDER", "FIELD_NAME", "CANONICAL_COLUMN", "BVBG_PATH"]].head())

@@ -27,9 +27,9 @@ import zipfile
 
 import pytest
 
-from filings_b3._internal.config.contracts import INSTRUMENTS_FILE
-import filings_b3._internal.utils.http_downloader as http_downloader
-from filings_b3.search_trading_session import InstrumentsFileReader
+from opendata_b3._internal.config.contracts import INSTRUMENTS_FILE
+import opendata_b3._internal.utils.http_downloader as http_downloader
+from opendata_b3.search_trading_session import InstrumentsFileReader
 
 
 _FIXTURE = Path(__file__).resolve().parents[1] / "fixtures" / "instruments_IN_sample.zip"

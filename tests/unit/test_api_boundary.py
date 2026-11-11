@@ -39,13 +39,13 @@ _MKDOCS = _REPO_ROOT / "mkdocs.yml"
 def _package_name() -> str:
 	"""Return the import package name — the single directory under ``src/``.
 
-	Derived rather than hard-coded so this gate ports to a sibling ``filings-*`` package
+	Derived rather than hard-coded so this gate ports to a sibling ``opendata-*`` package
 	with no edit.
 
 	Returns
 	-------
 	str
-		The import package name (e.g. ``filings_b3``).
+		The import package name (e.g. ``opendata_b3``).
 
 	Raises
 	------
@@ -66,7 +66,7 @@ _INTERNAL_DIR = _PKG_DIR / "_internal"
 # The frozen public API of the package ROOT. Adding a name here is the deliberate act of
 # publishing it — and the only way this test goes green again after an export changes. A name may
 # legitimately be *promoted* out of `_internal` by re-exporting it from the package `__init__`
-# (filings-cvm does exactly this with `RetryPolicy`); what this snapshot forbids is that happening
+# (opendata-cvm does exactly this with `RetryPolicy`); what this snapshot forbids is that happening
 # by accident.
 #
 # Readers are deliberately ABSENT: since 0.2.0 (#163) they are importable only from their own
@@ -74,7 +74,7 @@ _INTERNAL_DIR = _PKG_DIR / "_internal"
 _PUBLIC_SURFACE: frozenset[str] = frozenset({"__version__"})
 
 # The per-section public surface. Each macro-section directory is itself a stable public import
-# path (`from filings_b3.daily_bulletin import …`), not merely a source-tree folder — so its
+# path (`from opendata_b3.daily_bulletin import …`), not merely a source-tree folder — so its
 # `__all__` is API too, and earns the same frozen-snapshot treatment as the root. The keys are the
 # public sections; a section appearing, or a reader added to one, is a deliberate one-line diff
 # here, never an accident. A section whose first reader has not landed yet

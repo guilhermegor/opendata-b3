@@ -1,6 +1,6 @@
 # **Pesquisa por Pregão**
 
-A seção `filings_b3.search_trading_session` lê os arquivos por pregão da B3, baixados de
+A seção `opendata_b3.search_trading_session` lê os arquivos por pregão da B3, baixados de
 `www.b3.com.br/pesquisapregao/download?filelist=…`. Cada dataset é um **arquivo** (em geral um ZIP,
 às vezes contendo XML ou vários membros tabulares); um _reader_ transforma um pregão em um
 `pandas.DataFrame` tipado, validado por contrato e com proveniência.

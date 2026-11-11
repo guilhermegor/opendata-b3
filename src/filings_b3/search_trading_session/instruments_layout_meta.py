@@ -43,7 +43,7 @@ from filings_b3._internal.utils.tabular_reader import read_table
 from filings_b3._internal.utils.text import pascal_to_upper_snake
 
 
-_DISTRIBUTION_NAME = "filings-b3"
+_DISTRIBUTION_NAME = "opendata-b3"
 
 # B3's authoritative BVBG.028 field-mapping spreadsheet (the "para UP2DATA" layout). A B3 URL move
 # is a single-point-of-change here — the drift job would fail to download and simply skip, never

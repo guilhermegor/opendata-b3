@@ -66,7 +66,7 @@ from filings_b3.search_trading_session._base_pregao_reader import PREGAO_DOWNLOA
 
 
 # Distribution name (hyphenated) for importlib.metadata — NOT the import package name.
-_DISTRIBUTION_NAME: str = "filings-b3"
+_DISTRIBUTION_NAME: str = "opendata-b3"
 
 # Local name of the repeating instrument-record element, confirmed against a live IN file:
 # BVBG.028 wraps each instrument in <Instrm> (not the guessed <InstrmRcrd>).

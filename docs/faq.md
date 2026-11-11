@@ -10,7 +10,7 @@ específicas do projeto conforme surgirem nas _issues_.
 ## Como instalo?
 
 ```bash
-pip install filings-b3
+pip install opendata-b3
 ```
 
 ## Como adiciono ou atualizo uma dependência?

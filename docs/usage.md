@@ -10,13 +10,13 @@ brasileira).
 ## Instalação
 
 ```bash
-pip install filings-b3
+pip install opendata-b3
 ```
 
 Ou com Poetry:
 
 ```bash
-poetry add filings-b3
+poetry add opendata-b3
 ```
 
 ---

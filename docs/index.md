@@ -19,7 +19,7 @@ contrato e com proveniência — valores monetários como `Decimal` exato, nunca
 ## Início rápido
 
 ```bash
-pip install filings-b3
+pip install opendata-b3
 ```
 
 ```python

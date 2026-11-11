@@ -2,10 +2,10 @@
 
 [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 ![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)
-![PyPI Version](https://img.shields.io/pypi/v/filings-b3)
+![PyPI Version](https://img.shields.io/pypi/v/opendata-b3)
 [![Snyk Vulnerabilities](https://snyk.io/test/github/guilhermegor/filings-b3/badge.svg)](https://snyk.io/test/github/guilhermegor/filings-b3)
 [![Snyk License](https://snyk.io/advisor/python/filings-b3/badge.svg)](https://snyk.io/advisor/python/filings-b3)
-![PyPI Downloads](https://static.pepy.tech/badge/filings-b3)
+![PyPI Downloads](https://static.pepy.tech/badge/opendata-b3)
 [![Linting](https://img.shields.io/badge/linting-ruff_|_codespell-blue)](https://github.com/astral-sh/ruff)
 ![Formatting: isort](https://img.shields.io/badge/formatting-isort-%231674b1)
 ![Test Coverage](./coverage.svg)
@@ -78,7 +78,7 @@ não passe por pregão pequeno.
 
 **Opção 1: Pip (recomendado)**
 ```bash
-pip install filings-b3
+pip install opendata-b3
 ```
 
 **Opção 2: Build a partir do código-fonte**

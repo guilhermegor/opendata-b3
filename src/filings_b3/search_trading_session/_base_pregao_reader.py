@@ -72,7 +72,7 @@ from filings_b3._internal.utils.tabular_reader import FileContract, read_table
 PREGAO_DOWNLOAD_BASE: str = "https://www.b3.com.br/pesquisapregao/download"
 
 # Distribution name (hyphenated) for importlib.metadata — NOT the import package name.
-_DISTRIBUTION_NAME: str = "filings-b3"
+_DISTRIBUTION_NAME: str = "opendata-b3"
 # Class attributes every concrete reader must define; checked at subclass-creation time so a
 # reader that forgets one fails loudly when the class is imported, not deep inside read().
 _REQUIRED_ATTRS: tuple[str, ...] = ("str_source_key", "cls_contract", "dict_dtypes")

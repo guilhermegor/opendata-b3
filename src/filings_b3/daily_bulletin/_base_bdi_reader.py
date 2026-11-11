@@ -110,7 +110,7 @@ _REQUEST_PAYLOAD: bytes = b"{}"
 _REQUEST_CONTENT_TYPE: str = "application/json"
 
 # Distribution name (hyphenated) for importlib.metadata — NOT the import package name.
-_DISTRIBUTION_NAME: str = "filings-b3"
+_DISTRIBUTION_NAME: str = "opendata-b3"
 # Class attributes every concrete reader must define; checked at subclass-creation time so a
 # reader that forgets one fails loudly when the class is imported, not deep inside read().
 _REQUIRED_ATTRS: tuple[str, ...] = (

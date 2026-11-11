@@ -12,7 +12,7 @@ from datetime import date
 
 import pandas as pd
 
-from filings_b3._internal.utils.dtypes import apply_dtypes
+from opendata_b3._internal.utils.dtypes import apply_dtypes
 
 
 def test_apply_dtypes_preserves_a_far_future_date_sentinel() -> None:

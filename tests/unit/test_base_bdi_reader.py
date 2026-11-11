@@ -14,8 +14,8 @@ from pathlib import Path
 
 import pytest
 
-from filings_b3._internal.utils.tabular_reader import ContractError, FileContract
-from filings_b3.daily_bulletin._base_bdi_reader import (
+from opendata_b3._internal.utils.tabular_reader import ContractError, FileContract
+from opendata_b3.daily_bulletin._base_bdi_reader import (
 	BDI_TABLE_BASE,
 	_BaseBdiReader,
 )
@@ -98,7 +98,9 @@ def _patch_pages(monkeypatch: pytest.MonkeyPatch) -> None:
 		path_dest.write_bytes(dict_pages.get(int_page, _page([])))
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 
 
 def test_read_requests_each_page_as_a_json_post(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -123,7 +125,9 @@ def test_read_requests_each_page_as_a_json_post(monkeypatch: pytest.MonkeyPatch)
 		path_dest.write_bytes(_page([["PETR4", 1.5]]))
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 
 	_DefaultPagingReader(_DATE).read()
 
@@ -174,7 +178,9 @@ def test_an_echoing_endpoint_is_not_multiplied(monkeypatch: pytest.MonkeyPatch) 
 		path_dest.write_bytes(_page([["PETR4", 1.5], ["VALE3", 2.5]]))  # same, every page
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 
 	class _EchoingReader(_SampleBdiReader):
 		"""Wrongly declared as paginated against an endpoint that echoes."""
@@ -279,13 +285,13 @@ def test_content_hash_covers_every_page_not_just_the_first(
 		return _fake_download
 
 	monkeypatch.setattr(
-		"filings_b3._internal.utils.http_downloader.download_file",
+		"opendata_b3._internal.utils.http_downloader.download_file",
 		_make_download([["VALE3", 2.5]]),
 	)
 	str_hash_before = _SampleBdiReader(_DATE).read()["content_hash"].iloc[0]
 
 	monkeypatch.setattr(
-		"filings_b3._internal.utils.http_downloader.download_file",
+		"opendata_b3._internal.utils.http_downloader.download_file",
 		_make_download([["VALE3", 2.5], ["ITUB4", 3.5]]),
 	)
 	str_hash_after = _SampleBdiReader(_DATE).read()["content_hash"].iloc[0]
@@ -331,7 +337,9 @@ def test_read_raises_contract_error_when_a_required_column_is_missing(
 		path_dest.write_bytes(json.dumps(dict_payload).encode("utf-8"))
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 	with pytest.raises(ContractError, match="VLM_TRADED_DAY"):
 		_SampleBdiReader(_DATE).read()
 
@@ -380,7 +388,9 @@ def _patch_bytes(monkeypatch: pytest.MonkeyPatch, bytes_page: bytes) -> None:
 		path_dest.write_bytes(bytes_page if int_page == 1 else _page([]))
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 
 
 def test_rows_wider_than_the_header_drop_their_empty_tail(

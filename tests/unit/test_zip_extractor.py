@@ -13,7 +13,7 @@ import zipfile
 
 import pytest
 
-from filings_b3._internal.utils.zip_extractor import list_member_names, peek_member
+from opendata_b3._internal.utils.zip_extractor import list_member_names, peek_member
 
 
 @pytest.fixture

@@ -2,11 +2,11 @@
 """Weekly, non-blocking contract-drift detector — B3's UP2DATA layout as the oracle.
 
 B3 can change the BVBG.028 instruments layout *after* we have shipped
-:data:`~filings_b3._internal.config.contracts.INSTRUMENTS_FILE` and the reader's column→XML-path
+:data:`~opendata_b3._internal.config.contracts.INSTRUMENTS_FILE` and the reader's column→XML-path
 map. Nothing at PR time can see that: the reader's tests prove it matched the layout the day they
 were written, but only a job that fetches B3's published layout again can notice a change made
 since. This script downloads the authoritative ``BVBG.028 para UP2DATA`` spreadsheet (via
-:class:`~filings_b3.search_trading_session.InstrumentsLayoutMetaReader`), compares the columns B3
+:class:`~opendata_b3.search_trading_session.InstrumentsLayoutMetaReader`), compares the columns B3
 **declares** against the columns the instruments reader **maps**, and — on any divergence — opens
 (or updates) a **single tracking issue**. It never fails the build: a B3 outage and a real drift
 would be indistinguishable in a red check, and a red check must never gate a PR or a release. See
@@ -28,9 +28,9 @@ import sys
 from typing import Any
 import urllib.request
 
-from filings_b3._internal.config.contracts import INSTRUMENTS_FILE
-from filings_b3._internal.utils.retry import RetryPolicy
-from filings_b3.search_trading_session import (
+from opendata_b3._internal.config.contracts import INSTRUMENTS_FILE
+from opendata_b3._internal.utils.retry import RetryPolicy
+from opendata_b3.search_trading_session import (
 	InstrumentsLayoutMetaReader,
 	instruments_file as _inst,
 )

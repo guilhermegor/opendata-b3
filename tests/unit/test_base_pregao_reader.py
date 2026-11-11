@@ -12,9 +12,9 @@ from pathlib import Path
 
 import pytest
 
-from filings_b3._internal.utils.http_downloader import url_filename
-from filings_b3._internal.utils.tabular_reader import ContractError, FileContract
-from filings_b3.search_trading_session._base_pregao_reader import _BasePregaoReader
+from opendata_b3._internal.utils.http_downloader import url_filename
+from opendata_b3._internal.utils.tabular_reader import ContractError, FileContract
+from opendata_b3.search_trading_session._base_pregao_reader import _BasePregaoReader
 
 
 # Contracts are normally constructed only in config/contracts (ruff TID251); tests are exempt,
@@ -59,7 +59,9 @@ def _patch_download(monkeypatch: pytest.MonkeyPatch) -> None:
 		path_dest.write_bytes(_FIXTURE_CSV)
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 
 
 def test_run_returns_typed_contract_validated_frame(_patch_download: None) -> None:
@@ -91,7 +93,9 @@ def test_run_raises_contract_error_when_required_column_missing(
 		path_dest.write_bytes(b"code\nABC\n")  # 'amount' missing
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 	with pytest.raises(ContractError):
 		_SampleReader().read()
 

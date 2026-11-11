@@ -2,7 +2,7 @@
 
 import pytest
 
-from filings_b3.main import main
+from opendata_b3.main import main
 
 
 def test_main(capsys: pytest.CaptureFixture[str]) -> None:

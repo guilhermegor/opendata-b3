@@ -42,7 +42,7 @@ Colunas monetárias carregam a sua **moeda** numa coluna companheira (`FRST_PRIC
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileEqtyReader
+from opendata_b3.search_trading_session import InstrumentsFileEqtyReader
 
 df = InstrumentsFileEqtyReader(date(2026, 7, 29)).read()
 print(df.head())

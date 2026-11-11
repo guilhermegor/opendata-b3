@@ -13,7 +13,7 @@ from urllib.request import Request
 
 import pytest
 
-import filings_b3._internal.utils.http_downloader as http_downloader
+import opendata_b3._internal.utils.http_downloader as http_downloader
 
 
 class _FakeResponse:

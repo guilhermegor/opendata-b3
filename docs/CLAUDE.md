@@ -43,4 +43,4 @@ splitting it later rots every published deep link. Group new API pages by the co
 top-level split. Brand assets live in `docs/assets/` (`b3-logo.png`, wired as
 `theme.logo`/`favicon` + the landing image in `docs/index.md`), with size/position/border tuned
 inline on the `<img>` (`width` / `align` / `style="border-radius"`) in `docs/index.md` and
-`README.md` — mirroring filings-cvm; no `extra.css` needed.
+`README.md` — mirroring opendata-cvm; no `extra.css` needed.

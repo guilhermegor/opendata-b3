@@ -15,8 +15,8 @@ from pathlib import Path
 import openpyxl
 import pytest
 
-import filings_b3._internal.utils.http_downloader as http_downloader
-from filings_b3.search_trading_session import InstrumentsLayoutMetaReader
+import opendata_b3._internal.utils.http_downloader as http_downloader
+from opendata_b3.search_trading_session import InstrumentsLayoutMetaReader
 
 
 _HEADER = [

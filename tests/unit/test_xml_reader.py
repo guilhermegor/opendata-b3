@@ -15,8 +15,8 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from filings_b3._internal.utils.tabular_reader import ContractError, FileContract
-from filings_b3._internal.utils.xml_reader import read_xml
+from opendata_b3._internal.utils.tabular_reader import ContractError, FileContract
+from opendata_b3._internal.utils.xml_reader import read_xml
 
 
 _NS = "urn:bvmf.100.02.xsd"

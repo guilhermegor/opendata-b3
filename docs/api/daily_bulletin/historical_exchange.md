@@ -51,7 +51,7 @@ instrumento **sem erro nenhum**, apenas devolvendo nada.
 
 ```python
 from datetime import date
-from filings_b3.daily_bulletin import BdiHistoricalExchangeReader
+from opendata_b3.daily_bulletin import BdiHistoricalExchangeReader
 
 df = BdiHistoricalExchangeReader(date(2026, 8, 7)).read()
 print(df[["RPT_DT", "ASST", "TCKR_SYMB", "PRIC_VAL"]])
@@ -76,7 +76,7 @@ from datetime import date, timedelta
 
 import pandas as pd
 
-from filings_b3.daily_bulletin import BdiHistoricalExchangeReader
+from opendata_b3.daily_bulletin import BdiHistoricalExchangeReader
 
 date_start, date_end = date(2026, 8, 3), date(2026, 8, 7)
 list_frames = []
@@ -112,7 +112,7 @@ precificado a partir da taxa.
 from datetime import date
 from pathlib import Path
 
-from filings_b3.daily_bulletin import BdiHistoricalExchangeReader
+from opendata_b3.daily_bulletin import BdiHistoricalExchangeReader
 
 df = BdiHistoricalExchangeReader(
     date(2026, 8, 7), path_raw=Path("/data/bronze/b3")

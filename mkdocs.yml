@@ -1,6 +1,6 @@
-site_name: filings-b3
-site_description: Documentação do filings-b3
-repo_url: https://github.com/guilhermegor/filings-b3
+site_name: opendata-b3
+site_description: Documentação do opendata-b3
+repo_url: https://github.com/guilhermegor/opendata-b3
 nav:
   - Início: index.md
   - Uso: usage.md

@@ -19,8 +19,8 @@ from pathlib import Path
 
 import pytest
 
-from filings_b3._internal.config.contracts import BDI_HISTORICAL_EXCHANGE
-from filings_b3.daily_bulletin import BdiHistoricalExchangeReader
+from opendata_b3._internal.config.contracts import BDI_HISTORICAL_EXCHANGE
+from opendata_b3.daily_bulletin import BdiHistoricalExchangeReader
 
 
 _DATE = date(2026, 8, 7)
@@ -62,7 +62,9 @@ def _patch_download(monkeypatch: pytest.MonkeyPatch) -> None:
 		path_dest.write_bytes(json.dumps(dict_payload).encode("utf-8"))
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 
 
 def test_read_publishes_the_glossary_semantics_not_the_api_naming(_patch_download: None) -> None:

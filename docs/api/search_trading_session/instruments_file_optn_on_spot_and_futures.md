@@ -42,7 +42,7 @@ Colunas monetárias carregam a sua **moeda** numa coluna companheira (`EXRC_PRIC
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileOptnOnSpotAndFuturesReader
+from opendata_b3.search_trading_session import InstrumentsFileOptnOnSpotAndFuturesReader
 
 df = InstrumentsFileOptnOnSpotAndFuturesReader(date(2026, 7, 29)).read()
 print(df.head())

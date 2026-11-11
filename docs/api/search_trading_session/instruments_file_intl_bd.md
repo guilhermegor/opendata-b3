@@ -47,7 +47,7 @@ As demais colunas preservam o texto exato da fonte.
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileIntlBdReader
+from opendata_b3.search_trading_session import InstrumentsFileIntlBdReader
 
 df = InstrumentsFileIntlBdReader(date(2026, 7, 29)).read()
 print(df[["TCKR_SYMB", "ISIN", "CUSIP", "ISSR_CTRY", "ISSE_PRIC", "ISSE_PRIC_CCY"]].head())

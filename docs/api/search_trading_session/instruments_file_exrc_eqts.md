@@ -26,7 +26,7 @@ contra um arquivo `IN` real. Os nomes seguem a convenção da biblioteca:
     Até a 0.2.1 este _reader_ publicava `OptnExrcInstrmId/OthrId/Tp/Prtry` como **`TP`** — o mesmo
     nome que outros dois _readers_ da família davam a campos **diferentes**, de modo que empilhar
     os quadros fundia silenciosamente três campos sem relação
-    ([#165](https://github.com/guilhermegor/filings-b3/issues/165)). **Migração:** renomeie `TP`
+    ([#165](https://github.com/guilhermegor/opendata-b3/issues/165)). **Migração:** renomeie `TP`
     para `OPTN_EXRC_INSTRM_ID_TP` no seu consumo. O caminho de origem e os valores não mudaram —
     só o nome da coluna.
 
@@ -50,7 +50,7 @@ Colunas monetárias carregam a sua **moeda** numa coluna companheira (`TRADG_CCY
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileExrcEqtsReader
+from opendata_b3.search_trading_session import InstrumentsFileExrcEqtsReader
 
 df = InstrumentsFileExrcEqtsReader(date(2026, 7, 29)).read()
 print(df.head())

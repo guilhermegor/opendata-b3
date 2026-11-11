@@ -14,8 +14,8 @@ from pathlib import Path
 
 import pytest
 
-from filings_b3._internal.config.contracts import BDI_STOCKS_SUMMARY
-from filings_b3.daily_bulletin import BdiStocksSummaryReader
+from opendata_b3._internal.config.contracts import BDI_STOCKS_SUMMARY
+from opendata_b3.daily_bulletin import BdiStocksSummaryReader
 
 
 _DATE = date(2025, 1, 2)
@@ -56,7 +56,9 @@ def _patch_download(monkeypatch: pytest.MonkeyPatch) -> None:
 		path_dest.write_bytes(json.dumps(dict_payload).encode("utf-8"))
 		return path_dest
 
-	monkeypatch.setattr("filings_b3._internal.utils.http_downloader.download_file", _fake_download)
+	monkeypatch.setattr(
+		"opendata_b3._internal.utils.http_downloader.download_file", _fake_download
+	)
 
 
 def test_reader_targets_the_daily_average_stocks_endpoint() -> None:
@@ -150,10 +152,10 @@ def test_reader_is_exported_from_its_section_and_not_from_the_root() -> None:
 	Inverted from the #122 contract by #163: the section path is now the only public one, so the
 	root must NOT resolve the name (a re-export would quietly restore the flat surface).
 	"""
-	import filings_b3
-	from filings_b3 import daily_bulletin
+	import opendata_b3
+	from opendata_b3 import daily_bulletin
 
 	assert daily_bulletin.BdiStocksSummaryReader is BdiStocksSummaryReader
 	assert "BdiStocksSummaryReader" in daily_bulletin.__all__
-	assert not hasattr(filings_b3, "BdiStocksSummaryReader")
-	assert "BdiStocksSummaryReader" not in filings_b3.__all__
+	assert not hasattr(opendata_b3, "BdiStocksSummaryReader")
+	assert "BdiStocksSummaryReader" not in opendata_b3.__all__

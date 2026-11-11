@@ -52,7 +52,7 @@ legitimamente nulas.
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileReader
+from opendata_b3.search_trading_session import InstrumentsFileReader
 
 df = InstrumentsFileReader(date(2025, 1, 2)).read()
 print(df[["TCKR_SYMB", "ASST", "MKT_NM", "ISIN"]].head())

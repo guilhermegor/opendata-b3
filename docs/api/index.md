@@ -9,15 +9,15 @@ uma visão geral (`index.md`) e **uma página por _reader_** (`Descrição` + `E
 
 | Seção | Import público | Estado |
 |-------|----------------|--------|
-| [Boletim Diário do Pregão (BDI)](daily_bulletin/index.md) | `filings_b3.daily_bulletin` | **2 _readers_** |
-| [Pesquisa por Pregão](search_trading_session/index.md) | `filings_b3.search_trading_session` | **1 _reader_** |
-| Plataformas (PUMA) | `filings_b3.platforms` | _planejada_ |
-| Índices | `filings_b3.indexes` | _planejada_ |
-| Dados de mercado | `filings_b3.market_data` | _planejada_ |
-| _Clearing_ (garantias) | `filings_b3.clearing` | _planejada_ |
+| [Boletim Diário do Pregão (BDI)](daily_bulletin/index.md) | `opendata_b3.daily_bulletin` | **2 _readers_** |
+| [Pesquisa por Pregão](search_trading_session/index.md) | `opendata_b3.search_trading_session` | **1 _reader_** |
+| Plataformas (PUMA) | `opendata_b3.platforms` | _planejada_ |
+| Índices | `opendata_b3.indexes` | _planejada_ |
+| Dados de mercado | `opendata_b3.market_data` | _planejada_ |
+| _Clearing_ (garantias) | `opendata_b3.clearing` | _planejada_ |
 
-Cada _reader_ é importável **apenas pela sua seção** — `from filings_b3.daily_bulletin import …`.
-A raiz `filings_b3` exporta só `__version__`; o subpacote `_internal` é privado.
+Cada _reader_ é importável **apenas pela sua seção** — `from opendata_b3.daily_bulletin import …`.
+A raiz `opendata_b3` exporta só `__version__`; o subpacote `_internal` é privado.
 
 !!! warning "Mudança na 0.2.0"
     Até a 0.1.x cada _reader_ era **também** reexportado de forma plana na raiz. Isso foi removido:

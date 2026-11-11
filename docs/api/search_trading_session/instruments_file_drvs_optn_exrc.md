@@ -51,7 +51,7 @@ unidades de liquidação, não um multiplicador decimal.
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileDrvsOptnExrcReader
+from opendata_b3.search_trading_session import InstrumentsFileDrvsOptnExrcReader
 
 df = InstrumentsFileDrvsOptnExrcReader(date(2026, 7, 29)).read()
 print(df.head())

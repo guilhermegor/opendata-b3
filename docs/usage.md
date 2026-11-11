@@ -1,6 +1,6 @@
 # **Uso**
 
-Instalando e usando o `filings-b3` — acesso tipado aos conjuntos de dados públicos da B3 (a bolsa
+Instalando e usando o `opendata-b3` — acesso tipado aos conjuntos de dados públicos da B3 (a bolsa
 brasileira).
 
 > **Veja também:** [Referência da API](api/index.md) · [Exemplos](examples.md)
@@ -28,7 +28,7 @@ proveniência:
 
 ```python
 from datetime import date
-from filings_b3.daily_bulletin import BdiBtbLendingOpenPositionsReader
+from opendata_b3.daily_bulletin import BdiBtbLendingOpenPositionsReader
 
 df = BdiBtbLendingOpenPositionsReader(date(2025, 1, 2)).read()
 print(df[["TCKR_SYMB", "STOCK_BALANCE", "BALANCE"]].head())
@@ -39,7 +39,7 @@ importado **de lá, e só de lá**. A raiz do pacote não exporta _readers_.
 
 !!! warning "Mudança na 0.2.0"
     Até a 0.1.x cada _reader_ também era reexportado de forma plana na raiz
-    (`from filings_b3 import BdiBtbLendingOpenPositionsReader`). Isso **foi removido**: com seis
+    (`from opendata_b3 import BdiBtbLendingOpenPositionsReader`). Isso **foi removido**: com seis
     macro-seções e ~105 datasets previstos, a raiz viraria uma lista de mais de cem nomes — o
     oposto do que a organização por seção existe para resolver. Troque o _import_ pela seção
     correspondente.

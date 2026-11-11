@@ -45,7 +45,7 @@ As demais colunas preservam o texto exato da fonte.
 
 ```python
 from datetime import date
-from filings_b3.search_trading_session import InstrumentsFileFicReader
+from opendata_b3.search_trading_session import InstrumentsFileFicReader
 
 df = InstrumentsFileFicReader(date(2026, 7, 29)).read()
 print(df[["OTHR_ID", "FND_NM", "SCTY_CTGY_NM", "CCY"]].head())

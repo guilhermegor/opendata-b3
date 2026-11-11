@@ -1,6 +1,6 @@
 # **Boletim Diário do Pregão (BDI)**
 
-A seção `filings_b3.daily_bulletin` lê os conjuntos de dados do **Boletim Diário do Pregão** da B3,
+A seção `opendata_b3.daily_bulletin` lê os conjuntos de dados do **Boletim Diário do Pregão** da B3,
 servidos a partir de `arquivos.b3.com.br/bdi`. Cada conjunto é uma tabela JSON paginada; um _reader_
 transforma um pregão em um `pandas.DataFrame` tipado, validado por contrato e com proveniência.
 
